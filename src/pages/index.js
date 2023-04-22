@@ -33,6 +33,7 @@ const App = () => {
 
 
  return (
+     <Spin tip="Datele se incarca..." spinning={loading}>
     <><Space>
      <Upload {...props}>
        <Button icon={<UploadOutlined />}>Incarca HTML File-ul</Button>
@@ -47,11 +48,10 @@ const App = () => {
    </Space>
    
     <Space>
-    <Spin spinning={loading}>
        <QuizComponent data={results} />
-    </Spin>
     </Space>
     </>
+    </Spin>
   )
 };
 export default App;
