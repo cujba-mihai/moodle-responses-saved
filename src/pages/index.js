@@ -17,11 +17,11 @@ const props = {
 const App = () => {
   const [results, setResults ] = useState([]);
   const onSearch = async (value) => {
-    const res = await axios.get(`/api/search?question=${value}`, {
+    const response = await axios.get(`/api/search?question=${value}`, {
       method: 'GET',
     })
 
-    setResults(res.data.results)
+    setResults(response.data.results)
   }
 
 
