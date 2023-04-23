@@ -5,10 +5,10 @@ const useFirstVisit = () => {
   const [firstVisit, setFirstVisit] = useState(false);
 
   useEffect(() => {
-    const isFirstVisit = Cookies.get('firstVisit') === undefined;
+    const isFirstVisit = Cookies.get('firstTimeVisitor') === undefined;
 
     if (isFirstVisit) {
-      Cookies.set('firstVisit', 'false', { expires: 365 });
+      Cookies.set('firstTimeVisitor', 'false', { expires: 365 });
       setFirstVisit(true);
     }
   }, []);
