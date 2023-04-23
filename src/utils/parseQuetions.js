@@ -26,7 +26,7 @@ export function parseQuestions(htmlString) {
           type: 'multichoice',
           question: questionText,
           choices,
-          score,
+          score: score || 0,
           maxScore
         });
       } else if (questionNode.classList.contains('match')) {
@@ -40,7 +40,7 @@ export function parseQuestions(htmlString) {
           type: 'match',
           question: questionText,
           choices,
-          score,
+          score: score || 0,
           maxScore
         });
       } else if (questionNode.classList.contains('text')) {
@@ -51,7 +51,7 @@ export function parseQuestions(htmlString) {
           type: 'text',
           question: questionText,
           answer: answerText,
-          score,
+          score: score || 0,
           maxScore
         });
       } else if (questionNode.classList.contains('truefalse')) {
@@ -62,7 +62,7 @@ export function parseQuestions(htmlString) {
           type: 'truefalse',
           question: questionText,
           answer,
-          score,
+          score: score || 0,
           maxScore
         });
       }

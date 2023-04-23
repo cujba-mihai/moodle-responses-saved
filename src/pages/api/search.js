@@ -26,7 +26,7 @@ handler.get(async (req, res) => {
     const db = await getMongoDb();
     const regexQuery = { question: { $regex: replacedText, $options: "i" } };
     const results = await db.collection('questions').find(regexQuery).toArray();
-    const sortedResults = _.orderBy(results, [(item) => (item.maxScore === 0 ? 0 : item.score / item.maxScore)], ['desc']);
+    const sortedResults = _.orderBy(results, [(item) => (item.maxScore === 0 ? 0 : (item.score || 0) / item.maxScore)], ['desc']);
 
     res.statusCode = 200;
     res.setHeader('Content-type', 'application-json');
