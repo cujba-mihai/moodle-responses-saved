@@ -95,7 +95,7 @@ const App = () => {
       <>
         <Affix offsetTop={7}>
           <Space >
-            <div ref={ref1}>
+            <div className={firstVisit? '':'hide-on-mobile'} ref={ref1}>
             <Upload  {...props}>
               <Button ref={ref1} icon={<UploadOutlined />}>Incarca HTML File-ul</Button>
             </Upload>

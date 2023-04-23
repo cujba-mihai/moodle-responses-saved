@@ -13,8 +13,8 @@ export function parseQuestions(htmlString) {
       const questionText = questionNode.querySelector('.qtext').textContent.trim();
       const scoreData = questionNode.querySelector('.grade').textContent.trim();
       const [score, maxScore] = scoreData.match(/[\d.,]+/g).map((x) => parseFloat(x.replace(',', '.')));
-  
-  
+      const scoreRatio = (score || 0) / maxScore;
+   
       if (questionNode.classList.contains('multichoice')) {
         const choices = Array.from(questionNode.querySelectorAll('.answer input[type="checkbox"] + .d-flex, .answer input[type="radio"] + .d-flex')).map((choiceNode) => {
           const label = choiceNode.textContent.trim();
@@ -27,6 +27,7 @@ export function parseQuestions(htmlString) {
           question: questionText,
           choices,
           score: score || 0,
+          scoreRatio,
           maxScore
         });
       } else if (questionNode.classList.contains('match')) {
@@ -41,6 +42,7 @@ export function parseQuestions(htmlString) {
           question: questionText,
           choices,
           score: score || 0,
+          scoreRatio,
           maxScore
         });
       } else if (questionNode.classList.contains('text')) {
@@ -52,6 +54,7 @@ export function parseQuestions(htmlString) {
           question: questionText,
           answer: answerText,
           score: score || 0,
+          scoreRatio,
           maxScore
         });
       } else if (questionNode.classList.contains('truefalse')) {
@@ -63,6 +66,7 @@ export function parseQuestions(htmlString) {
           question: questionText,
           answer,
           score: score || 0,
+          scoreRatio,
           maxScore
         });
       }
