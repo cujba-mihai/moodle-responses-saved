@@ -100,7 +100,7 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
               </div>
             )}
             <div style={{ marginTop: 10 }}>
-              <span style={{backgroundColor, color: textColor}}><strong>Score:</strong> {item.score} / {item.maxScore}</span>
+              <span style={{backgroundColor, color: textColor, padding: '5px 10px'}}><strong>Score:</strong> {item.score} / {item.maxScore}</span>
             </div>
           </Card>
         )
