@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Radio, Typography } from 'antd';
+import { Card, Col, Typography, Checkbox } from 'antd';
 
 const { Title } = Typography;
 
@@ -10,25 +10,28 @@ const QuizComponent = ({ data }) => {
         <Card key={index} style={{ marginBottom: 20 }}>
           <Title level={4}>{item.question}</Title>
           {item.type === 'multichoice' && (
-            <Radio.Group>
+            <Col>
               {item.choices.map((choice, i) => (
-                <Radio
+                <Checkbox
                   key={i}
                   value={choice.label}
                   checked={choice.isChecked}
                   disabled
-                  style={{
+                  style={
+                    {
                     color: 'black',
-                    backgroundColor: choice.isChecked ? '#d9f7be' : 'transparent',
-                    display: 'block',
+                    display: 'flex',
+                    alignContent: 'center',
+                    justifyContent:'left',
                     padding: '5px',
+                    marginLeft: '-5px',
                     marginBottom: '5px',
                   }}
                 >
-                  {choice.label}
-                </Radio>
+                  <span style={{color: 'black'}}>{choice.label}</span>
+                </Checkbox>
               ))}
-            </Radio.Group>
+            </Col>
           )}
           {item.type === 'match' && (
             <div>
