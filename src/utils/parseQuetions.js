@@ -54,6 +54,17 @@ export function parseQuestions(htmlString) {
           score,
           maxScore
         });
+      } else if (questionNode.classList.contains('truefalse')) {
+        const answerNode = questionNode.querySelector('input[type="radio"][checked="checked"]')
+        const answer = !!(parseInt(answerNode.value));
+  
+        questions.push({
+          type: 'truefalse',
+          question: questionText,
+          answer,
+          score,
+          maxScore
+        });
       }
     });
   

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Typography, Checkbox, Space, Alert } from 'antd';
+import { Card, Col, Typography, Checkbox, Space, Alert, Radio } from 'antd';
 
 const { Title } = Typography;
 
@@ -26,14 +26,14 @@ function getContrastingTextColor(backgroundColor) {
 const QuizComponent = ({ data, firstSearchTriggered }) => {
   return (
     <div>
-      {(data.length === 0 && firstSearchTriggered) && (    
-      <Space direction="vertical" style={{ width: '100%', marginTop: '20px'}}>
-    <Alert
-      message="Fără rezultate"
-      description="Niciun răspuns găsit în căutare"
-      type="info"
-    />
-    </Space>)}
+      {(data.length === 0 && firstSearchTriggered) && (
+        <Space direction="vertical" style={{ width: '100%', marginTop: '20px' }}>
+          <Alert
+            message="Fără rezultate"
+            description="Niciun răspuns găsit în căutare"
+            type="info"
+          />
+        </Space>)}
       {data.map((item, index) => {
         const scoreRatio = item.score / item.maxScore;
         const startColor = { r: 255, g: 0, b: 0 }; // red
@@ -54,16 +54,16 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
                     disabled
                     style={
                       {
-                      color: 'black',
-                      display: 'flex',
-                      alignContent: 'center',
-                      justifyContent:'left',
-                      padding: '5px',
-                      marginLeft: '-5px',
-                      marginBottom: '5px',
-                    }}
+                        color: 'black',
+                        display: 'flex',
+                        alignContent: 'center',
+                        justifyContent: 'left',
+                        padding: '5px',
+                        marginLeft: '-5px',
+                        marginBottom: '5px',
+                      }}
                   >
-                    <span style={{color: 'black'}}>{choice.label}</span>
+                    <span style={{ color: 'black' }}>{choice.label}</span>
                   </Checkbox>
                 ))}
               </Col>
@@ -99,8 +99,36 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
                 <span>{item.answer}</span>
               </div>
             )}
+            {item.type === 'truefalse' && (
+              <>
+                  <Radio
+                    defaultChecked={item.answer}
+                    disabled
+                    style={{
+                      color: 'black',
+                      display: 'block',
+                      padding: '5px',
+                      marginBottom: '5px',
+                    }}
+                  >
+                    Adevarat
+                  </Radio>
+                  <Radio
+                    defaultChecked={!item.answer}
+                    disabled
+                    style={{
+                      color: 'black',
+                      display: 'block',
+                      padding: '5px',
+                      marginBottom: '5px',
+                    }}
+                  >
+                    Fals
+                  </Radio>
+              </>
+            )}
             <div style={{ marginTop: 10 }}>
-              <span style={{backgroundColor, color: textColor, padding: '5px 10px'}}><strong>Score:</strong> {item.score} / {item.maxScore}</span>
+              <span style={{ backgroundColor, color: textColor, padding: '5px 10px' }}><strong>Score:</strong> {item.score} / {item.maxScore}</span>
             </div>
           </Card>
         )
