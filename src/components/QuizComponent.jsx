@@ -1,11 +1,19 @@
 import React from 'react';
-import { Card, Col, Typography, Checkbox } from 'antd';
+import { Card, Col, Typography, Checkbox, Space, Alert } from 'antd';
 
 const { Title } = Typography;
 
-const QuizComponent = ({ data }) => {
+const QuizComponent = ({ data, firstSearchTriggered }) => {
   return (
     <div>
+      {(data.length === 0 && firstSearchTriggered) && (    
+      <Space direction="vertical" style={{ width: '100%', marginTop: '20px'}}>
+    <Alert
+      message="Fără rezultate"
+      description="Niciun răspuns găsit în căutare"
+      type="info"
+    />
+    </Space>)}
       {data.map((item, index) => (
         <Card key={index} style={{ marginBottom: 20 }}>
           <Title level={4}>{item.question}</Title>
