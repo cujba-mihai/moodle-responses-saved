@@ -11,7 +11,7 @@ const props = {
   action: '/api/upload',
   onChange({ file, fileList }) {
     if (file.status !== 'uploading') {
-      console.log(file, fileList);
+      console.info(file, fileList);
     }
   },
   defaultFileList: [],

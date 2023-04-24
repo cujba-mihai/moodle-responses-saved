@@ -12,7 +12,6 @@ const FileUpload = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(...args)
     e.preventDefault();
     if (!file) return;
   
@@ -25,7 +24,6 @@ const FileUpload = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
     } catch (error) {
       console.error('Error uploading file:', error.response?.data?.error || error.message);
     }
