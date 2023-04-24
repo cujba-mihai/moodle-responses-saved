@@ -11,8 +11,14 @@ export function parseQuestions(htmlString) {
   
     questionNodes.forEach((questionNode) => {
       const questionText = questionNode.querySelector('.qtext').textContent.trim();
+
+      const stateNode = questionNode.querySelector('.state');
+      const noAnswerGiven = stateNode && stateNode.textContent.trim() === 'Nu a primit răspuns';
       const scoreData = questionNode.querySelector('.grade').textContent.trim();
-      const [score, maxScore] = scoreData.match(/[\d.,]+/g).map((x) => parseFloat(x.replace(',', '.')));
+      const [score, maxScore] = noAnswerGiven
+        ? [0, parseFloat(scoreData.match(/[\d.,]+/g)[0].replace(',', '.'))]
+        : scoreData.match(/[\d.,]+/g).map((x) => parseFloat(x.replace(',', '.')));
+
       const scoreRatio = (score || 0) / maxScore;
    
       if (questionNode.classList.contains('multichoice')) {
@@ -28,7 +34,8 @@ export function parseQuestions(htmlString) {
           choices,
           score: score || 0,
           scoreRatio,
-          maxScore
+          maxScore,
+          noAnswerGiven
         });
       } else if (questionNode.classList.contains('match')) {
         const choices = Array.from(questionNode.querySelectorAll('.answer tr')).map((choiceNode) => {
@@ -43,7 +50,8 @@ export function parseQuestions(htmlString) {
           choices,
           score: score || 0,
           scoreRatio,
-          maxScore
+          maxScore,
+          noAnswerGiven
         });
       } else if (questionNode.classList.contains('text')) {
         const answerNode = questionNode.querySelector('input[type="text"]');
@@ -59,7 +67,7 @@ export function parseQuestions(htmlString) {
         });
       } else if (questionNode.classList.contains('truefalse')) {
         const answerNode = questionNode.querySelector('input[type="radio"][checked="checked"]')
-        const answer = !!(parseInt(answerNode.value));
+        const answer = !!(parseInt(answerNode?.value));
   
         questions.push({
           type: 'truefalse',
@@ -67,7 +75,8 @@ export function parseQuestions(htmlString) {
           answer,
           score: score || 0,
           scoreRatio,
-          maxScore
+          maxScore,
+          noAnswerGiven
         });
       }
     });

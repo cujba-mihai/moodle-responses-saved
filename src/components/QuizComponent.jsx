@@ -35,6 +35,7 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
           />
         </Space>)}
       {data.map((item, index) => {
+        console.log(item);
         const scoreRatio = item.score / item.maxScore;
         const startColor = { r: 255, g: 0, b: 0 }; // red
         const endColor = { r: 0, g: 255, b: 0 }; // green
