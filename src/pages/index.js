@@ -11,10 +11,9 @@ import {
 } from "antd";
 import QuizComponent from "../components/QuizComponent";
 import axios from "axios";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import useFirstVisit from "../hooks/useFirstVisit";
 import Image from "next/image";
-import { getServerSideProps } from "../utils/getServerSideProps";
 
 const { Search } = Input;
 
@@ -28,12 +27,12 @@ const props = {
   defaultFileList: [],
 };
 
-const App = ({ initialResults, totalResults: total }) => {
+const App = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState(initialResults);
-  const [totalResults, setTotalResults] = useState(total);
+  const [results, setResults] = useState([]);
+  const [totalResults, setTotalResults] = useState(0);
   const [firstSearchTriggered, setFirstSearchTriggered] = useState(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
@@ -83,7 +82,7 @@ const App = ({ initialResults, totalResults: total }) => {
     },
   ];
 
-  const onSearch = async (value, page, pageSize) => {
+  const onSearch = useCallback(async (value, page, pageSize) => {
     setCurrentSearchValue(value);
     setLoading(true);
     const offset = (page - 1) * pageSize;
@@ -103,7 +102,7 @@ const App = ({ initialResults, totalResults: total }) => {
     setLoading(false);
 
     setFirstSearchTriggered(true);
-  };
+  }, []);
 
   const handlePaginationChange = (page, pageSize) => {
     setCurrentPage(page);
@@ -111,6 +110,9 @@ const App = ({ initialResults, totalResults: total }) => {
     onSearch(currentSearchValue, page, pageSize); // Pass page and pageSize as arguments
   };
 
+  useEffect(() => {
+    onSearch(currentSearchValue)
+  }, []);
   return (
     <Spin tip="Datele se incarca..." spinning={loading}>
       <>
@@ -166,7 +168,5 @@ const App = ({ initialResults, totalResults: total }) => {
     </Spin>
   );
 };
-
-export { getServerSideProps };
 
 export default App;
