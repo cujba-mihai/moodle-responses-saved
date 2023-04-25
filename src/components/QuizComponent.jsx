@@ -34,7 +34,7 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
             type="info"
           />
         </Space>)}
-      {data.map((item, index) => {
+      {data.map((item) => {
         const scoreRatio = item.score / item.maxScore;
         const startColor = { r: 255, g: 0, b: 0 }; // red
         const endColor = { r: 0, g: 255, b: 0 }; // green
@@ -42,7 +42,7 @@ const QuizComponent = ({ data, firstSearchTriggered }) => {
         const textColor = getContrastingTextColor(backgroundColor);
 
         return (
-          <Card key={index} style={{ marginBottom: 20 }}>
+          <Card key={item._id} style={{ marginBottom: 20 }}>
             <Title level={4}>{item.question}</Title>
             {item.type === 'multichoice' && (
               <Col>
