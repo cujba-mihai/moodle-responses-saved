@@ -16,10 +16,15 @@ const escapeRegex = (str) => {
     return str.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, '\\$&');
 };
 
+function removeDiacritics(text) {
+  const romanianDiacritics = /ă|â|î|ș|ț|Ă|Â|Î|Ș|Ț/g;
+  return text.replace(romanianDiacritics, '');
+}
+
 
 handler.get(async (req, res) => {
     const { question, offset, limit } = req.query;
-    const normalizedText = question.normalize().trim();
+    const normalizedText = removeDiacritics(question.normalize().trim());
     const words = normalizedText.split(/\s+/);
 
     const regexQueries = words.map((word) => {
