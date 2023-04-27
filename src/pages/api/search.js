@@ -5,7 +5,7 @@ import _ from 'lodash';
 const handler = nextConnect()
 
 function removeDiacritics(text) {
-  const romanianDiacritics = /ă|â|î|ș|ț|Ă|Â|Î|Ș|Ț|\W/g;
+  const romanianDiacritics = /ă|â|î|ș|ț|a|i|s|t|\W/gi;
   return text.replace(romanianDiacritics, '.');
 }
 
