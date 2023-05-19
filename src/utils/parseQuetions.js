@@ -10,8 +10,7 @@ export function parseQuestions(htmlString) {
     const questions = [];
   
     questionNodes.forEach((questionNode) => {
-      const questionText = questionNode.querySelector('.qtext').textContent.trim();
-
+      const question = questionNode.querySelector('.qtext').textContent.trim();
       const stateNode = questionNode.querySelector('.state');
       const noAnswerGiven = stateNode && stateNode.textContent.trim() === 'Nu a primit răspuns';
       const scoreData = questionNode.querySelector('.grade').textContent.trim();
@@ -30,7 +29,7 @@ export function parseQuestions(htmlString) {
   
         questions.push({
           type: 'multichoice',
-          question: questionText,
+          question,
           choices,
           score: score || 0,
           scoreRatio,
@@ -46,7 +45,7 @@ export function parseQuestions(htmlString) {
   
         questions.push({
           type: 'match',
-          question: questionText,
+          question,
           choices,
           score: score || 0,
           scoreRatio,
@@ -59,7 +58,7 @@ export function parseQuestions(htmlString) {
   
         questions.push({
           type: 'text',
-          question: questionText,
+          question,
           answer: answerText,
           score: score || 0,
           scoreRatio,
@@ -71,7 +70,7 @@ export function parseQuestions(htmlString) {
   
         questions.push({
           type: 'truefalse',
-          question: questionText,
+          question,
           answer,
           score: score || 0,
           scoreRatio,
@@ -81,5 +80,14 @@ export function parseQuestions(htmlString) {
       }
     });
   
-    return questions;
+    return cleanQuestionsArray(questions);
+}
+function cleanQuestionsArray(questionsArray) {
+  return questionsArray.map(questionObj => {
+      if (typeof questionObj.question === 'string') {
+          const cleanQuestion = questionObj.question.replace(/\s+/g, ' ').trim();
+          return {...questionObj, question: cleanQuestion};
+      }
+      return questionObj;
+  });
 }
